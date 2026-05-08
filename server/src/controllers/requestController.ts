@@ -72,6 +72,8 @@ export const createRequest = async (req: AuthRequest, res: Response) => {
             }
 
             const startNotificationJob = async () => {
+                const io = getIO();
+
                 // 1. In-App Notifications (Still for all matching donors/hospitals)
                 const inAppRecipients = [...donors, ...hospitals];
                 for (const user of inAppRecipients) {
@@ -85,7 +87,15 @@ export const createRequest = async (req: AuthRequest, res: Response) => {
                     );
                 }
 
-                // 2. Email Notification (ONLY for target facility)
+                // 2. Real-Time Socket Alert (New broadcast)
+                io.emit('emergency_alert', {
+                    bloodType: request.bloodType,
+                    hospitalName: request.hospitalName,
+                    urgency: request.urgency,
+                    requestId: request._id
+                });
+
+                // 3. Email Notification (ONLY for target facility)
                 if (facilityEmail) {
                     const emailDetails = {
                         bloodType: request.bloodType,

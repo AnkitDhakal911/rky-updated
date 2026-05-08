@@ -224,53 +224,7 @@ export const DonorDashboard = ({ user }: { user: UserType }) => {
                 </div>
             </div>
 
-            {/* Filter Bar */}
-            <div className="px-4">
-                <div className="bg-white/50 backdrop-blur-md rounded-[32px] p-6 border border-white/50 shadow-xl flex flex-col md:flex-row items-center justify-between gap-8">
-                    <div className="flex flex-col gap-3 w-full md:w-auto">
-                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-2">Blood Group Filter</p>
-                        <div className="flex flex-wrap gap-2">
-                            {['All', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map(type => (
-                                <button
-                                    key={type}
-                                    onClick={() => setFilterBloodType(type)}
-                                    className={cn(
-                                        "px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all",
-                                        filterBloodType === type 
-                                            ? "bg-[#FF1744] text-white shadow-lg shadow-red-100 scale-105" 
-                                            : "bg-white text-gray-400 hover:text-gray-900 border border-gray-100"
-                                    )}
-                                >
-                                    {type}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
 
-                    <div className="flex flex-col gap-3 w-full md:min-w-[300px]">
-                        <div className="flex justify-between items-center ml-2">
-                            <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Search Radius</p>
-                            <span className="text-[10px] font-black text-[#FF1744] uppercase">{filterRange} KM</span>
-                        </div>
-                        <div className="flex gap-2">
-                            {[5, 20, 50, 100, 500].map(km => (
-                                <button
-                                    key={km}
-                                    onClick={() => setFilterRange(km)}
-                                    className={cn(
-                                        "flex-1 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all",
-                                        filterRange === km 
-                                            ? "bg-gray-900 text-white shadow-lg" 
-                                            : "bg-white text-gray-400 border border-gray-100"
-                                    )}
-                                >
-                                    {km}k
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             {/* Opportunity Board */}
             <div className="px-4 space-y-12 sm:space-y-16">
@@ -299,6 +253,58 @@ export const DonorDashboard = ({ user }: { user: UserType }) => {
                         <Button onClick={() => navigate('/dashboard/book-appointment')} className="bg-gray-900 text-white hover:bg-black px-8 h-16 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-xl flex items-center gap-3">
                             <Calendar size={18} /> Book Appointment
                         </Button>
+                    </div>
+                </div>
+
+                {/* Inline Filters */}
+                <div className="bg-white/60 backdrop-blur-xl rounded-[40px] p-8 border border-white shadow-2xl shadow-gray-200/50 flex flex-col xl:flex-row items-center justify-between gap-12 mt-4 transition-all hover:shadow-red-500/5">
+                    <div className="flex flex-col gap-5 w-full md:w-auto">
+                        <div className="flex items-center gap-3 ml-2">
+                            <div className="w-2 h-2 bg-[#FF1744] rounded-full animate-pulse" />
+                            <p className="text-[11px] font-black text-gray-400 uppercase tracking-[0.3em]">Blood Group Intelligence</p>
+                        </div>
+                        <div className="flex flex-wrap gap-2.5">
+                            {['All', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map(type => (
+                                <button
+                                    key={type}
+                                    onClick={() => setFilterBloodType(type)}
+                                    className={cn(
+                                        "px-7 py-3.5 rounded-[20px] text-[11px] font-black uppercase tracking-widest transition-all border-2",
+                                        filterBloodType === type 
+                                            ? "bg-[#FF1744] border-[#FF1744] text-white shadow-xl shadow-red-200 scale-105" 
+                                            : "bg-white border-gray-50 text-gray-400 hover:text-gray-900 hover:border-gray-200"
+                                    )}
+                                >
+                                    {type}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col gap-5 w-full md:min-w-[360px]">
+                        <div className="flex justify-between items-center ml-2">
+                            <div className="flex items-center gap-3">
+                                <div className="w-2 h-2 bg-gray-900 rounded-full" />
+                                <p className="text-[11px] font-black text-gray-400 uppercase tracking-[0.3em]">Proximity Radar</p>
+                            </div>
+                            <span className="bg-gray-900 text-white px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest shadow-lg">{filterRange} KM</span>
+                        </div>
+                        <div className="flex gap-2.5">
+                            {[5, 20, 50, 100, 500].map(km => (
+                                <button
+                                    key={km}
+                                    onClick={() => setFilterRange(km)}
+                                    className={cn(
+                                        "flex-1 py-3.5 rounded-[20px] text-[11px] font-black uppercase tracking-widest transition-all border-2",
+                                        filterRange === km 
+                                            ? "bg-gray-900 border-gray-900 text-white shadow-xl shadow-gray-200" 
+                                            : "bg-white border-gray-50 text-gray-400 hover:text-gray-900 hover:border-gray-200"
+                                    )}
+                                >
+                                    {km}k
+                                </button>
+                            ))}
+                        </div>
                     </div>
                 </div>
 
@@ -510,16 +516,16 @@ export const DonorDashboard = ({ user }: { user: UserType }) => {
                         ))}
                     </div>
                 ) : (
-                    <div className="py-40 text-center bg-white rounded-[60px] border-4 border-dashed border-gray-100 flex flex-col items-center gap-8 shadow-sm">
+                    <div className="py-40 text-center bg-white/50 backdrop-blur-md rounded-[60px] border-4 border-dashed border-gray-100 flex flex-col items-center gap-8 shadow-sm">
                         <div className="relative">
                             <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center text-gray-200">
                                 <Activity size={56} />
                             </div>
-                            <div className="absolute inset-0 bg-blue-400 rounded-full animate-ping opacity-10" />
+                            <div className="absolute inset-0 bg-[#FF1744] rounded-full animate-ping opacity-5" />
                         </div>
                         <div className="space-y-3">
                             <h3 className="text-2xl font-black text-gray-900 tracking-tight uppercase">No nearby requests</h3>
-                            <p className="text-gray-400 font-bold max-w-sm mx-auto">There are no active blood requests in your area right now.</p>
+                            <p className="text-gray-400 font-bold max-w-sm mx-auto">There are no active blood requests in your current search radius.</p>
                         </div>
                     </div>
                 )}
@@ -600,7 +606,6 @@ export const DonorDashboard = ({ user }: { user: UserType }) => {
                     </Card>
                 </div>
             )}
-
         </div>
     );
 };
